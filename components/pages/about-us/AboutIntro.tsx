@@ -22,10 +22,10 @@ export default function AboutIntro() {
       <section className=" py-16" id="intro">
         <div className=" container mx-auto">
           <h2 className=" text-xl lg:text-2xl font-bold text-center mb-3">
-            HEALTH COMES FIRST :{" "}
+            {data.data.homepageBlog.title}:{" "}
             <span className=" text-primary-dark">
               {" "}
-              Almost nothing else matter in its absence
+              {data.data.homepageBlog.content}
             </span>
           </h2>
           <p>{data.data.introduction}</p>

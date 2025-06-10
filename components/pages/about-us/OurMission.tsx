@@ -5,7 +5,9 @@ import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
 import Image from "next/image";
 import useTranslation from "@/hooks/useTranslation";
-
+import { useLangStore } from "@/hooks/useLangStore";
+import { useAboutMission } from "@/hooks/api/aboutmission";
+import { useEffect } from "react";
 const missions = [
   {
     title: "Provide Accessible and High-Quality Care",
@@ -51,6 +53,33 @@ const missions = [
 
 export default function OurMission() {
   const { t } = useTranslation();
+  const {lang} = useLangStore();
+  const {data,isLoading,refetch} = useAboutMission({lang});
+
+  useEffect(()=>{
+    refetch()
+  },[lang])
+
+  if (isLoading) {
+    return (
+      <>
+        <section className="relative bg-gray-200 text-white py-24 h-[200px]"></section>
+
+        {/* About Description */}
+        <section className="py-16 bg-white" id="background">
+          <div className="container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className=" min-h-[200px] bg-gray-200"></div>
+            <div className=" min-h-[200px] lg:h-auto bg-gray-200 rounded-lg"></div>
+          </div>
+        </section>
+      </>
+    );
+  }
+  
+  if(!data?.data){
+   return <p>Data not found</p>
+  }
+  console.log(data?.data)
   return (
     <section className=" bg-gray-50">
       <div className=" container px-4 py-10 overflow-x-hidden">
@@ -71,11 +100,11 @@ export default function OurMission() {
           className="!pb-10"
           style={{ height: "290px" }}
         >
-          {missions.map((item, idx) => (
+         {data.data.map((item, idx) => (
             <SwiperSlide key={idx} className="">
               <div className="bg-white px-6 py-10 rounded-xl text-center shadow relative h-full">
-                <h4 className="font-semibold mb-3">{item.title}</h4>
-                <p className="italic text-gray-700 ">{item.description}</p>
+                <h4 className="font-semibold mb-3">{item?.title}</h4>
+                <p className="italic text-gray-700 ">{item?.mission}</p>
                 {/* <p className="text-sm text-gray-500">{t.location}</p> */}
                 <div className=" w-full  absolute top-0 left-0">
                   <div className="w-14 h-14 rounded-full bg-primary text-white mx-auto -mt-7 grid place-items-center">

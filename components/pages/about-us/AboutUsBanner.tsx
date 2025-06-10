@@ -25,28 +25,37 @@ export default function AboutUsBanner() {
       </>
     );
   }
+
   if (!data?.data) return <p>Data not found</p>;
   return (
     <>
-      <section className="relative bg-blue-900 text-white py-24">
-        <div className="absolute inset-0 bg-black opacity-50"></div>
-        <div className="container mx-auto px-4 relative z-10">
-          <h1
-            className={`${
-              lang === "en" ? "text-4xl md:text-5xl" : "text-2xl md:text-3xl"
-            } font-bold mb-4 text-center text-primary`}
-          >
-            {data?.data.title}
-          </h1>
-          <p
-            className={`${
-              lang === "en" ? "text-xl" : " mt-2"
-            }  max-w-2xl text-center mx-auto`}
-          >
-            {data.data.about}
-          </p>
-        </div>
-      </section>
+      <section
+  className="relative bg-blue-900 text-white py-24 bg-cover bg-center"
+  style={{
+    backgroundImage: `url('${data.data.images.bannerbgimg}')`, // Replace with your image path or URL
+  }}
+>
+  {/* Dark overlay */}
+  <div className="absolute inset-0 bg-black opacity-80"></div>
+
+  {/* Content */}
+  <div className="container mx-auto px-4 relative z-10">
+    <h1
+      className={`${
+        lang === "en" ? "text-4xl md:text-5xl" : "text-2xl md:text-3xl"
+      } font-bold mb-4 text-center text-primary`}
+    >
+      {data?.data.title}
+    </h1>
+    <p
+      className={`${
+        lang === "en" ? "text-xl" : " mt-2"
+      } max-w-2xl text-center mx-auto`}
+    >
+      {data.data.about}
+    </p>
+  </div>
+</section>
 
       {/* About Description */}
       <section className="py-16 bg-white" id="background">
@@ -65,7 +74,7 @@ export default function AboutUsBanner() {
           </div>
           <div className=" min-h-[200px] lg:h-auto bg-gray-200 rounded-lg">
             <Image
-              src={"/imgs/amo.jpg"}
+              src={data.data.images.backgroundblogimg}
               alt="background"
               width={500}
               height={500}
